@@ -15,3 +15,7 @@ fun <M, T, E : Any> validator(vararg validators: Pair<Getter<M, T>, Validator<T,
 fun <E> ifBlank(error: E): Validator<String, E> {
     return { if (it.isBlank()) error else null }
 }
+
+fun <T, E> ifInvalid(error: E, test: (T) -> Boolean): Validator<T, E> {
+    return { if (test(it)) error else null }
+}
