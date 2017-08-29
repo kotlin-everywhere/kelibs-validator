@@ -13,7 +13,7 @@ fun <M, T, E : Any> validator(vararg validators: Pair<Getter<M, T>, Validator<T,
 }
 
 fun <E> ifBlank(error: E): Validator<String, E> {
-    return { if (it.isBlank()) error else null }
+    return ifInvalid(error, String::isBlank)
 }
 
 fun <T, E> ifInvalid(error: E, test: (T) -> Boolean): Validator<T, E> {

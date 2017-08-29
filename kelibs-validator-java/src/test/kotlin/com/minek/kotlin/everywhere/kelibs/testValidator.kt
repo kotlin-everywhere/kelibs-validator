@@ -22,8 +22,16 @@ class TestValidator {
 
     @Test
     fun testIfInvalid() {
-        val ifFalse = ifInvalid<Boolean, String>("false") { !it }
-        assertNull(ifFalse(true))
-        assertEquals("false", ifFalse(false))
+        val validator = ifInvalid<Boolean, String>("false") { !it }
+        assertNull(validator(true))
+        assertEquals("false", validator(false))
+    }
+
+    @Test
+    fun testIfBlank() {
+        val validator = ifBlank("blank")
+        assertEquals("blank", validator(""))
+        assertEquals("blank", validator(" ")) // test white space
+        assertEquals(null, validator("not blank"))
     }
 }
