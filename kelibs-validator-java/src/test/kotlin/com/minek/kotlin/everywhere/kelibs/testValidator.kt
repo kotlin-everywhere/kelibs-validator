@@ -12,9 +12,7 @@ class TestValidator {
     fun testValidate() {
         class Model(val name: String)
 
-        val validate = validator(
-                Model::name to ifBlank("required")
-        )
+        val validate = validator(Model::name to ifBlank("required"))
 
         assertEquals(listOf("required"), validate(Model("")))
         assertEquals(listOf<String>(), validate(Model("john")))
