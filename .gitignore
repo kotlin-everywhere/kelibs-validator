@@ -1,0 +1,14 @@
+#gradle
+.gradle/
+build/
+
+#node.js
+node_modules/
+
+#Intellij
+.idea/
+*.iml
+out/
+
+#vim
+*.swp
