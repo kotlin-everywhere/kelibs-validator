@@ -18,4 +18,3 @@ class TestValidator {
         assertEquals(listOf<String>(), validate(Model("john")))
     }
 }
-
