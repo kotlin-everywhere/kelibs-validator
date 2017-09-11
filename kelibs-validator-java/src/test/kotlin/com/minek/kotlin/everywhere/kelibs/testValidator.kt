@@ -43,6 +43,15 @@ class TestValidator {
     }
 
     @Test
+    fun testIfNotMatched() {
+        val validator = ifNotMatched("not matched", "^[a-z]+$".toRegex())
+        assertEquals(listOf("not matched"), validator(""))
+        assertEquals(listOf<String>(), validator("a"))
+        assertEquals(listOf<String>(), validator("ab"))
+        assertEquals(listOf("not matched"), validator("ab1"))
+    }
+
+    @Test
     fun testFirst() {
         class Model(val name: String)
 
