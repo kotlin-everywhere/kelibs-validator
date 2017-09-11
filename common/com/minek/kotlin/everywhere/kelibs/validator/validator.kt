@@ -16,6 +16,10 @@ fun <E> ifBlank(error: E): Validator<String, E> {
     return ifInvalid(error, String::isBlank)
 }
 
+fun <E> ifNotBetween(error: E, min: Int, max: Int): Validator<String, E> {
+    return ifInvalid(error, { it.length < min || it.length > max })
+}
+
 fun <T, E> ifInvalid(error: E, test: (T) -> Boolean): Validator<T, E> {
     return { if (test(it)) listOf(error) else listOf() }
 }

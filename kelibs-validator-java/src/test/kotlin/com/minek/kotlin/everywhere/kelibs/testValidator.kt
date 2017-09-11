@@ -1,9 +1,6 @@
 package com.minek.kotlin.everywhere.kelibs
 
-import com.minek.kotlin.everywhere.kelibs.validator.first
-import com.minek.kotlin.everywhere.kelibs.validator.ifBlank
-import com.minek.kotlin.everywhere.kelibs.validator.ifInvalid
-import com.minek.kotlin.everywhere.kelibs.validator.validator
+import com.minek.kotlin.everywhere.kelibs.validator.*
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -31,6 +28,18 @@ class TestValidator {
         assertEquals(listOf("blank"), validator(""))
         assertEquals(listOf("blank"), validator(" ")) // test white space
         assertEquals(listOf<String>(), validator("not blank"))
+    }
+
+    @Test
+    fun testIfNotBetween() {
+        val validator = ifNotBetween("not between", 3, 5)
+        assertEquals(listOf("not between"), validator(""))
+        assertEquals(listOf("not between"), validator("1"))
+        assertEquals(listOf("not between"), validator("12"))
+        assertEquals(listOf<String>(), validator("123"))
+        assertEquals(listOf<String>(), validator("1234"))
+        assertEquals(listOf<String>(), validator("12345"))
+        assertEquals(listOf("not between"), validator("123456"))
     }
 
     @Test
