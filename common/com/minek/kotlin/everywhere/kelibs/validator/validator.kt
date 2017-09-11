@@ -19,3 +19,13 @@ fun <E> ifBlank(error: E): Validator<String, E> {
 fun <T, E> ifInvalid(error: E, test: (T) -> Boolean): Validator<T, E> {
     return { if (test(it)) listOf(error) else listOf() }
 }
+
+fun <T, E> first(vararg validators: Validator<T, E>): Validator<T, E> {
+    return {
+        validators
+                .asSequence()
+                .map { validator -> validator(it) }
+                .filter { it.isNotEmpty() }
+                .firstOrNull() ?: listOf()
+    }
+}
