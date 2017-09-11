@@ -4,7 +4,6 @@ import com.minek.kotlin.everywhere.kelibs.validator.ifBlank
 import com.minek.kotlin.everywhere.kelibs.validator.ifInvalid
 import com.minek.kotlin.everywhere.kelibs.validator.validator
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
 import org.junit.Test
 
 class TestValidator {
@@ -21,15 +20,15 @@ class TestValidator {
     @Test
     fun testIfInvalid() {
         val validator = ifInvalid<Boolean, String>("false") { !it }
-        assertNull(validator(true))
-        assertEquals("false", validator(false))
+        assertEquals(listOf<String>(), validator(true))
+        assertEquals(listOf("false"), validator(false))
     }
 
     @Test
     fun testIfBlank() {
         val validator = ifBlank("blank")
-        assertEquals("blank", validator(""))
-        assertEquals("blank", validator(" ")) // test white space
-        assertEquals(null, validator("not blank"))
+        assertEquals(listOf("blank"), validator(""))
+        assertEquals(listOf("blank"), validator(" ")) // test white space
+        assertEquals(listOf<String>(), validator("not blank"))
     }
 }
