@@ -1,15 +1,19 @@
 package com.minek.kotlin.everywhere.kelibs.validator
 
 typealias Getter<M, T> = (M) -> T
-typealias Validate<M, E> = (M) -> List<E>
+typealias Validate<T, E> = (T) -> List<E>
 typealias Validator<T, E> = (T) -> List<E>
 
-fun <M, T, E : Any> validator(vararg validators: Pair<Getter<M, T>, Validator<T, E>>): Validate<M, E> {
+fun <M, E : Any> validator(vararg validates: Validate<M, E>): Validate<M, E> {
     return { model ->
-        validators.flatMap { (getter, validator) ->
-            validator(getter(model))
+        validates.flatMap {
+            it(model)
         }
     }
+}
+
+infix fun <M, T, E> Getter<M, T>.to(validator: (T) -> List<E>): Validate<M, E> {
+    return { validator(this.invoke(it)) }
 }
 
 fun <T, E> ifInvalid(error: E, test: (T) -> Boolean): Validator<T, E> {

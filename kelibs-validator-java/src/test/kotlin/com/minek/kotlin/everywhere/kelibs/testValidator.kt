@@ -7,12 +7,16 @@ import org.junit.Test
 class TestValidator {
     @Test
     fun testValidate() {
-        class Model(val name: String)
+        class Model(val name: String, val age: Int)
 
-        val validate = validator(Model::name to ifBlank("required"))
+        val validate = validator(
+                Model::name to ifBlank("required"),
+                Model::age to { if (it < 18) listOf("minor") else listOf() }
+        )
 
-        assertEquals(listOf("required"), validate(Model("")))
-        assertEquals(listOf<String>(), validate(Model("john")))
+        assertEquals(listOf("required"), validate(Model("", 18)))
+        assertEquals(listOf<String>(), validate(Model("john", 18)))
+        assertEquals(listOf("minor"), validate(Model("john", 17)))
     }
 
     @Test
