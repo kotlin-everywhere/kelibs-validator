@@ -55,6 +55,16 @@ class TestValidator {
         assertEquals(listOf("not matched"), validator("ab1"))
     }
 
+
+    @Test
+    fun testIfEmpty() {
+        val validator = ifEmpty("empty")
+        assertEquals(listOf("empty"), validator(listOf<String>()))
+        assertEquals(listOf("empty"), validator(listOf<Int>()))
+        assertEquals(listOf(), validator(listOf(1, 2, 3)))
+        assertEquals(listOf(), validator(listOf("1", "2", "3")))
+    }
+
     @Test
     fun testFirst() {
         class Model(val name: String)

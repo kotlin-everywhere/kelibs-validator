@@ -32,6 +32,10 @@ fun <E> ifNotMatched(error: E, regex: Regex): Validator<String, E> {
     return ifInvalid(error) { !it.matches(regex) }
 }
 
+fun <E> ifEmpty(error: E): Validator<Collection<*>, E> {
+    return ifInvalid(error) { it.isEmpty() }
+}
+
 fun <T, E> first(vararg validators: Validator<T, E>): Validator<T, E> {
     return {
         validators
