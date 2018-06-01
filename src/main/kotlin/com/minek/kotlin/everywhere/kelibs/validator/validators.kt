@@ -22,3 +22,11 @@ fun ifNotMatched(regex: Regex): (String) -> List<String> = ifNotMatched("Invalid
 fun <E> ifEmpty(error: E): (Collection<*>) -> List<E> = ifInvalid(error) { it.isEmpty() }
 
 val ifEmpty: (Collection<*>) -> List<String> = ifEmpty("This field is required.")
+
+fun <T, E> first(vararg validators: (T) -> List<E>): (T) -> List<E> = {
+    validators
+            .asSequence()
+            .map { validator -> validator(it) }
+            .filter { it.isNotEmpty() }
+            .firstOrNull() ?: listOf()
+}

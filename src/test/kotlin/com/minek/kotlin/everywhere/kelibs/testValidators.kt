@@ -80,4 +80,18 @@ class TestValidators {
         assertEquals(listOf(), validator2(listOf(1, 2, 3)))
         assertEquals(listOf(), validator2(listOf("1", "2", "3")))
     }
+
+    @Test
+    fun testFirst() {
+        class Model(val name: String, val age: Int = 18)
+
+        val validate = validator(
+                Model::name by first(ifBlank, ifInvalid { !it.matches("^[a-z]+$".toRegex()) }),
+                Model::age by { listOf<String>() }
+        )
+
+        assertEquals(mapOf<(Model) -> Any, List<String>>(Model::name to listOf("This field is required."), Model::age to listOf()), validate(Model("")))
+        assertEquals(mapOf<(Model) -> Any, List<String>>(Model::name to listOf("Invalid"), Model::age to listOf()), validate(Model("존")))
+        assertEquals(mapOf<(Model) -> Any, List<String>>(Model::name to listOf(), Model::age to listOf()), validate(Model("john")))
+    }
 }
