@@ -3,6 +3,7 @@ package com.minek.kotlin.everywhere.kelibs
 import com.minek.kotlin.everywhere.kelibs.validator.ifBlank
 import com.minek.kotlin.everywhere.kelibs.validator.ifInvalid
 import com.minek.kotlin.everywhere.kelibs.validator.ifNotBetween
+import com.minek.kotlin.everywhere.kelibs.validator.ifNotMatched
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -50,5 +51,20 @@ class TestValidators {
         assertEquals(listOf(), validator2("1234"))
         assertEquals(listOf(), validator2("12345"))
         assertEquals(listOf("Field must be between 3 and 5 characters long."), validator2("123456"))
+    }
+
+    @Test
+    fun testIfNotMatched() {
+        val validator = ifNotMatched("not matched", "^[a-z]+$".toRegex())
+        assertEquals(listOf("not matched"), validator(""))
+        assertEquals(listOf(), validator("a"))
+        assertEquals(listOf(), validator("ab"))
+        assertEquals(listOf("not matched"), validator("ab1"))
+
+        val validator2 = ifNotMatched("^[a-z]+$".toRegex())
+        assertEquals(listOf("Invalid input."), validator2(""))
+        assertEquals(listOf(), validator2("a"))
+        assertEquals(listOf(), validator2("ab"))
+        assertEquals(listOf("Invalid input."), validator2("ab1"))
     }
 }

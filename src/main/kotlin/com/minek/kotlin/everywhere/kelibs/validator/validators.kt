@@ -13,3 +13,8 @@ fun <E> ifNotBetween(error: E, min: Int, max: Int): (String) -> List<E> =
 
 fun ifNotBetween(min: Int, max: Int): (String) -> List<String> =
         ifNotBetween("Field must be between $min and $max characters long.", min, max)
+
+
+fun <E> ifNotMatched(error: E, regex: Regex): (String) -> List<E> = ifInvalid(error) { !it.matches(regex) }
+
+fun ifNotMatched(regex: Regex): (String) -> List<String> = ifNotMatched("Invalid input.", regex)
