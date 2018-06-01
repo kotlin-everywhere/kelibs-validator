@@ -1,7 +1,9 @@
 package com.minek.kotlin.everywhere.kelibs.validator
 
 fun <T, E, K> validator(vararg validators: Pair<K, (T) -> List<E>>): (T) -> Map<K, List<E>> = {
-    validators.map { (key, validate) -> key to validate(it) }.toMap()
+    validators.map { (key, validate) -> key to validate(it) }
+            .filter { it.second.isNotEmpty() }
+            .toMap()
 }
 
 infix fun <T, R, E> ((T) -> R).by(validate: (R) -> List<E>): Pair<(T) -> R, (T) -> List<E>> =

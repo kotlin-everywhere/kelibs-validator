@@ -23,11 +23,9 @@ class TestValidator {
         )
 
         assertEquals(
-                mapOf(
+                mapOf<(Person) -> Any?, List<String>>(
                         Person::name to listOf("bad name"),
-                        Person::age to listOf("minor"),
-                        validNothing to listOf(),
-                        validNothing2 to listOf()
+                        Person::age to listOf("minor")
                 ),
                 validate(Person("", 17))
         )
@@ -36,7 +34,7 @@ class TestValidator {
         val errors = validate(Person("", 17))
         assertEquals(listOf("bad name"), errors[Person::name])
         assertEquals(listOf("minor"), errors[Person::age])
-        assertEquals(listOf(), errors[validNothing])
-        assertEquals(listOf(), errors[validNothing2])
+        assertEquals(null, errors[validNothing])
+        assertEquals(null, errors[validNothing2])
     }
 }

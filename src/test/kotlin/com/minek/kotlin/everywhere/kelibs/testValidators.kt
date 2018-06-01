@@ -90,8 +90,8 @@ class TestValidators {
                 Model::age by { listOf<String>() }
         )
 
-        assertEquals(mapOf<(Model) -> Any, List<String>>(Model::name to listOf("This field is required."), Model::age to listOf()), validate(Model("")))
-        assertEquals(mapOf<(Model) -> Any, List<String>>(Model::name to listOf("Invalid"), Model::age to listOf()), validate(Model("존")))
-        assertEquals(mapOf<(Model) -> Any, List<String>>(Model::name to listOf(), Model::age to listOf()), validate(Model("john")))
+        assertEquals(mapOf<(Model) -> Any, List<String>>(Model::name to listOf("This field is required.")), validate(Model("")))
+        assertEquals(mapOf<(Model) -> Any, List<String>>(Model::name to listOf("Invalid")), validate(Model("존")))
+        assertEquals(mapOf(), validate(Model("john")))
     }
 }
