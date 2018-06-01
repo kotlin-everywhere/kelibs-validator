@@ -1,9 +1,6 @@
 package com.minek.kotlin.everywhere.kelibs
 
-import com.minek.kotlin.everywhere.kelibs.validator.ifBlank
-import com.minek.kotlin.everywhere.kelibs.validator.ifInvalid
-import com.minek.kotlin.everywhere.kelibs.validator.ifNotBetween
-import com.minek.kotlin.everywhere.kelibs.validator.ifNotMatched
+import com.minek.kotlin.everywhere.kelibs.validator.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -66,5 +63,21 @@ class TestValidators {
         assertEquals(listOf(), validator2("a"))
         assertEquals(listOf(), validator2("ab"))
         assertEquals(listOf("Invalid input."), validator2("ab1"))
+    }
+
+
+    @Test
+    fun testIfEmpty() {
+        val validator = ifEmpty("empty")
+        assertEquals(listOf("empty"), validator(listOf<String>()))
+        assertEquals(listOf("empty"), validator(listOf<Int>()))
+        assertEquals(listOf(), validator(listOf(1, 2, 3)))
+        assertEquals(listOf(), validator(listOf("1", "2", "3")))
+
+        val validator2 = ifEmpty
+        assertEquals(listOf("This field is required."), validator2(listOf<String>()))
+        assertEquals(listOf("This field is required."), validator2(listOf<Int>()))
+        assertEquals(listOf(), validator2(listOf(1, 2, 3)))
+        assertEquals(listOf(), validator2(listOf("1", "2", "3")))
     }
 }

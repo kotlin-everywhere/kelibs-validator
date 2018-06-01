@@ -18,3 +18,7 @@ fun ifNotBetween(min: Int, max: Int): (String) -> List<String> =
 fun <E> ifNotMatched(error: E, regex: Regex): (String) -> List<E> = ifInvalid(error) { !it.matches(regex) }
 
 fun ifNotMatched(regex: Regex): (String) -> List<String> = ifNotMatched("Invalid input.", regex)
+
+fun <E> ifEmpty(error: E): (Collection<*>) -> List<E> = ifInvalid(error) { it.isEmpty() }
+
+val ifEmpty: (Collection<*>) -> List<String> = ifEmpty("This field is required.")
